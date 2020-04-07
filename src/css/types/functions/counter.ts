@@ -405,7 +405,7 @@ const createCJKCounter = (
     }
 
     for (let digit = 0; tmp > 0 && digit <= 4; digit++) {
-        let coefficient = tmp % 10;
+        const coefficient = tmp % 10;
 
         if (coefficient === 0 && contains(flags, CJK_ZEROS) && string !== '') {
             string = numbers[coefficient] + string;

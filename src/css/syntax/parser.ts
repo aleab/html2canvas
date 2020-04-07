@@ -74,7 +74,7 @@ export class Parser {
     parseComponentValues(): CSSValue[] {
         const values = [];
         while (true) {
-            let value = this.consumeComponentValue();
+            const value = this.consumeComponentValue();
             if (value.type === TokenType.EOF_TOKEN) {
                 return values;
             }

@@ -1,8 +1,8 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import json from 'rollup-plugin-json';
+import json from '@rollup/plugin-json';
 
 const pkg = require('./package.json');
 
@@ -15,8 +15,8 @@ const banner = `/*!
 export default {
     input: `src/index.ts`,
     output: [
-        { file: pkg.main, name: pkg.name, format: 'umd', banner, sourcemap: true },
-        { file: pkg.module, format: 'esm', banner, sourcemap: true },
+        { file: `dist/${pkg.name}.js`, name: pkg.name, format: 'umd', banner, sourcemap: true },
+        { file: `dist/${pkg.name}.esm.js`, format: 'esm', banner, sourcemap: true },
     ],
     external: [],
     watch: {
