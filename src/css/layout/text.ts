@@ -1,7 +1,7 @@
 import {OVERFLOW_WRAP} from '../property-descriptors/overflow-wrap';
 import {CSSParsedDeclaration} from '../index';
 import {LineBreaker} from 'css-line-break';
-import {fromCodePoint, toCodePoints} from '../../core/util';
+import {toCodePoints} from '../../core/util';
 import {Bounds, parseBounds} from './bounds';
 import {FEATURES} from '../../core/features';
 
@@ -68,7 +68,7 @@ const getRangeBounds = (node: Text, offset: number, length: number): Bounds => {
 };
 
 const breakText = (value: string, styles: CSSParsedDeclaration): string[] => {
-    return styles.letterSpacing !== 0 ? toCodePoints(value).map(i => fromCodePoint(i)) : breakWords(value, styles);
+    return styles.letterSpacing !== 0 ? toCodePoints(value).map(i => String.fromCodePoint(i)) : breakWords(value, styles);
 };
 
 const breakWords = (str: string, styles: CSSParsedDeclaration): string[] => {

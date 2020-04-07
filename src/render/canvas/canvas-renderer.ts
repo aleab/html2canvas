@@ -16,7 +16,6 @@ import {Cache} from '../../core/cache-storage';
 import {calculateBackgroundRendering, getBackgroundValueForIndex} from '../background';
 import {isDimensionToken} from '../../css/syntax/parser';
 import {TextBounds} from '../../css/layout/text';
-import {fromCodePoint, toCodePoints} from '../../core/util';
 import {ImageElementContainer} from '../../dom/replaced-elements/image-element-container';
 import {contentBox} from '../box-sizing';
 import {CanvasElementContainer} from '../../dom/replaced-elements/canvas-element-container';
@@ -24,6 +23,7 @@ import {SVGElementContainer} from '../../dom/replaced-elements/svg-element-conta
 import {ReplacedElementContainer} from '../../dom/replaced-elements/index';
 import {EffectTarget, IElementEffect, isClipEffect, isTransformEffect} from '../effects';
 import {contains} from '../../core/bitwise';
+import {toCodePoints} from '../../core/util';
 import {calculateGradientDirection, calculateRadius, processColorStops} from '../../css/types/functions/gradient';
 import {FIFTY_PERCENT, getAbsoluteValue} from '../../css/types/length-percentage';
 import {TEXT_DECORATION_LINE} from '../../css/property-descriptors/text-decoration-line';
@@ -144,7 +144,7 @@ export class CanvasRenderer {
         if (letterSpacing === 0) {
             this.ctx.fillText(text.text, text.bounds.left, text.bounds.top + text.bounds.height);
         } else {
-            const letters = toCodePoints(text.text).map(i => fromCodePoint(i));
+            const letters = toCodePoints(text.text).map(i => String.fromCodePoint(i));
             letters.reduce((left, letter) => {
                 this.ctx.fillText(letter, left, text.bounds.top + text.bounds.height);
 

@@ -1,5 +1,4 @@
 import {LIST_STYLE_TYPE} from '../../property-descriptors/list-style-type';
-import {fromCodePoint} from '../../../core/util';
 import {contains} from '../../../core/bitwise';
 import {CSSParsedCounterDeclaration} from '../../index';
 
@@ -363,7 +362,7 @@ const createCounterStyleFromRange = (
     return (
         (value < 0 ? '-' : '') +
         (createCounterStyleWithSymbolResolver(Math.abs(value), codePointRangeLength, isNumeric, codePoint =>
-            fromCodePoint(Math.floor(codePoint % codePointRangeLength) + codePointRangeStart)
+            String.fromCodePoint(Math.floor(codePoint % codePointRangeLength) + codePointRangeStart)
         ) +
             suffix)
     );

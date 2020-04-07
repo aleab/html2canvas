@@ -1,13 +1,23 @@
 {
-    "presets": [[
-        "@babel/preset-env",
-        {
-            "targets": {
-                "ie": "9"
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "corejs": 3,
+                "loose": true,
+                "modules": false,
+                "targets": {
+                    "browsers": "> 0.2%, last 2 versions, IE > 8"
+                },
+                "useBuiltIns": "usage"
             }
-        }
-    ], "@babel/preset-flow"],
+        ],
+        "@babel/preset-typescript"
+    ],
     "plugins": [
-        "add-module-exports"
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "add-module-exports",
+        ["const-enum", {"transform": "constObject"}]
     ]
 }

@@ -1,9 +1,9 @@
-import nodeResolve from '@rollup/plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import sourceMaps from 'rollup-plugin-sourcemaps';
-import typescript from 'rollup-plugin-typescript2';
+import babel from 'rollup-plugin-babel';
 import json from '@rollup/plugin-json';
-import {resolve} from 'path';
+import path from 'path';
 
 const pkg = require('../package.json');
 
@@ -13,11 +13,13 @@ const banner = `/*
  * Released under ${pkg.license} License
  */`;
 
+const extensions = [ '.js', '.ts', '.jsx', '.tsx', '.mjs' ];
+
 export default {
     input: `tests/testrunner.ts`,
     output: [
         {
-            file: resolve(__dirname, '../build/testrunner.js'),
+            file: path.resolve(__dirname, '../build/testrunner.js'),
             name: 'testrunner',
             format: 'iife',
             banner,
@@ -32,18 +34,23 @@ export default {
         // Allow node_modules resolution, so you can use 'external' to control
         // which external modules to include in the bundle
         // https://github.com/rollup/rollup-plugin-node-resolve#usage
-        nodeResolve(),
+        resolve({
+            mainFields: [ 'module', 'main', 'browser' ],
+            extensions
+        }),
         // Allow json resolution
         json(),
-        // Compile TypeScript files
-        typescript({useTsconfigDeclarationDir: false, tsconfig: resolve(__dirname, 'tsconfig.json')}),
         // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
         commonjs({
-            include: 'node_modules/**',
             namedExports: {
                 'node_modules/platform/platform.js': ['name', 'version'],
                 'node_modules/es6-promise/dist/es6-promise.js': ['Promise']
             }
+        }),
+        // Compile TypeScript files
+        babel({
+            exclude: 'node_modules/**',
+            extensions
         }),
 
         // Resolve source maps to the original source
