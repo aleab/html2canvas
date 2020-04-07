@@ -25,9 +25,11 @@
         "node": ">=8.0.0"
     },
     "scripts": {
-        "prebuild": "rimraf dist/ && rimraf build/ && mkdirp dist && mkdirp build",
+        "prepack": "npm install && npm run build",
+        "prebuild": "rimraf dist && rimraf build && rimraf gradient-parser/dist && mkdirp build",
         "postbuild": "npm run build:create-reftest-list && npm run build:testrunner && npm run build:minify",
-        "build": "tsc -m commonjs --outdir dist/lib && tsc -m es6 --outdir dist/lib-esm && npm run build:rollup",
+        "build": "tsc -m commonjs --outdir dist/lib && tsc -m es6 --outdir dist/lib-esm && npm run build:gradient-parser && npm run build:rollup",
+        "build:gradient-parser": "tsc -p gradient-parser -m commonjs && tsc -p gradient-parser -m es6 --outdir gradient-parser/dist/lib-esm",
         "build:rollup": "rollup -c rollup.config.ts",
         "build:testrunner": "rollup -c tests/rollup.config.ts",
         "build:minify": "uglifyjs --compress --comments /^!/ -o dist/html2canvas.min.js --mangle -- dist/html2canvas.js",

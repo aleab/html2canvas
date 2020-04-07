@@ -1,11 +1,11 @@
-/dist
+/**/node_modules/
+/**/dist
 /tmp
 /build
 /nbproject/
-image.jpg
 /.project
 /.settings/
-node_modules/
+image.jpg
 .envrc
 *.sublime-workspace
 *.baseline
