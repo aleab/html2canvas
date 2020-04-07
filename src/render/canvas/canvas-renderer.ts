@@ -16,7 +16,7 @@ import {Cache} from '../../core/cache-storage';
 import {calculateBackgroundRendering, getBackgroundValueForIndex} from '../background';
 import {isDimensionToken} from '../../css/syntax/parser';
 import {TextBounds} from '../../css/layout/text';
-import {fromCodePoint, toCodePoints} from 'css-line-break';
+import {fromCodePoint, toCodePoints} from '../../core/util';
 import {ImageElementContainer} from '../../dom/replaced-elements/image-element-container';
 import {contentBox} from '../box-sizing';
 import {CanvasElementContainer} from '../../dom/replaced-elements/canvas-element-container';

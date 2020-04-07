@@ -1,6 +1,7 @@
 import {OVERFLOW_WRAP} from '../property-descriptors/overflow-wrap';
 import {CSSParsedDeclaration} from '../index';
-import {fromCodePoint, LineBreaker, toCodePoints} from 'css-line-break';
+import {LineBreaker} from 'css-line-break';
+import {fromCodePoint, toCodePoints} from '../../core/util';
 import {Bounds, parseBounds} from './bounds';
 import {FEATURES} from '../../core/features';
 
