@@ -9,5 +9,5 @@
         "declaration": true,
         "declarationDir": "dist/types"
     },
-    "include": ["../src/gradient-parser"]
+    "include": ["../src/background-parser"]
 }

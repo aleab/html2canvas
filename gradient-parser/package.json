@@ -1,7 +1,0 @@
-{
-    "name": "html2canvas-gradient-parser",
-    "version": "1.0.0-rc.5",
-    "main": "dist/lib/gradient-parser/index.js",
-    "module": "dist/lib-esm/gradient-parser/index.js",
-    "typings": "dist/types/gradient-parser/index.d.ts"
-}

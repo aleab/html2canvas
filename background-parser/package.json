@@ -1,0 +1,7 @@
+{
+    "name": "html2canvas-background-parser",
+    "version": "1.0.0-rc.5",
+    "main": "dist/lib/background-parser/index.js",
+    "module": "dist/lib-esm/background-parser/index.js",
+    "typings": "dist/types/background-parser/index.d.ts"
+}
