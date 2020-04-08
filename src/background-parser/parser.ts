@@ -17,37 +17,10 @@ function getParser<T extends IPropertyDescriptor>(descriptor: T, style?: string 
     return new Parser(tokenizer.read());
 }
 
-export function parseBackgroundClip(style?: string | null) {
-    const parser = getParser(backgroundClip, style);
-    return backgroundClip.parse(parser.parseComponentValues());
-}
-
-export function parseBackgroundColor(style?: string | null) {
-    const parser = getParser(backgroundColor, style);
-    return color.parse(parser.parseComponentValue());
-}
-
-export function parseBackgroundImage(style?: string | null) {
-    const parser = getParser(backgroundImage, style);
-    return backgroundImage.parse(parser.parseComponentValues());
-}
-
-export function parseBackgroundOrigin(style?: string | null) {
-    const parser = getParser(backgroundOrigin, style);
-    return backgroundOrigin.parse(parser.parseComponentValues());
-}
-
-export function parseBackgroundPosition(style?: string | null) {
-    const parser = getParser(backgroundPosition, style);
-    return backgroundPosition.parse(parser.parseComponentValues());
-}
-
-export function parseBackgroundRepeat(style?: string | null) {
-    const parser = getParser(backgroundRepeat, style);
-    return backgroundRepeat.parse(parser.parseComponentValues());
-}
-
-export function parseBackgroundSize(style?: string | null) {
-    const parser = getParser(backgroundSize, style);
-    return backgroundSize.parse(parser.parseComponentValues());
-}
+export function parseBackgroundClip(style?: string | null) { return backgroundClip.parse(getParser(backgroundClip, style).parseComponentValues()); }
+export function parseBackgroundColor(style?: string | null) { return color.parse(getParser(backgroundColor, style).parseComponentValue()); }
+export function parseBackgroundImage(style?: string | null) { return backgroundImage.parse(getParser(backgroundImage, style).parseComponentValues()); }
+export function parseBackgroundOrigin(style?: string | null) { return backgroundOrigin.parse(getParser(backgroundOrigin, style).parseComponentValues()); }
+export function parseBackgroundPosition(style?: string | null) { return backgroundPosition.parse(getParser(backgroundPosition, style).parseComponentValues()); }
+export function parseBackgroundRepeat(style?: string | null) { return backgroundRepeat.parse(getParser(backgroundRepeat, style).parseComponentValues()); }
+export function parseBackgroundSize(style?: string | null) { return backgroundSize.parse(getParser(backgroundSize, style).parseComponentValues()); }
