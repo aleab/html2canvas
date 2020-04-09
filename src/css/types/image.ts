@@ -16,6 +16,10 @@ export enum CSSImageType {
     RADIAL_GRADIENT
 }
 
+export const isUrlImage = (background: ICSSImage): background is CSSURLImage => {
+    return background.type === CSSImageType.URL;
+};
+
 export const isLinearGradient = (background: ICSSImage): background is CSSLinearGradientImage => {
     return background.type === CSSImageType.LINEAR_GRADIENT;
 };

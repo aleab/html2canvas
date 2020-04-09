@@ -29,12 +29,13 @@ export const HUNDRED_PERCENT: NumberValueToken = {
 export const getAbsoluteValueForTuple = (
     tuple: LengthPercentageTuple,
     width: number,
-    height: number
+    height: number,
+    fontSize: number = 16,
 ): [number, number] => {
     const [x, y] = tuple;
-    return [getAbsoluteValue(x, width), getAbsoluteValue(typeof y !== 'undefined' ? y : x, height)];
+    return [getAbsoluteValue(x, width, fontSize), getAbsoluteValue(typeof y !== 'undefined' ? y : x, height, fontSize)];
 };
-export const getAbsoluteValue = (token: LengthPercentage, parent: number) => {
+export const getAbsoluteValue = (token: LengthPercentage, parent: number, fontSize: number = 16) => {
     if (token.type === TokenType.PERCENTAGE_TOKEN) {
         return (token.number / 100) * parent;
     }
@@ -43,7 +44,7 @@ export const getAbsoluteValue = (token: LengthPercentage, parent: number) => {
         switch (token.unit) {
             case 'rem':
             case 'em':
-                return 16 * token.number; // TODO use correct font-size
+                return fontSize * token.number;
             case 'px':
             default:
                 return token.number;

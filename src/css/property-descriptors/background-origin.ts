@@ -1,7 +1,7 @@
 import {IPropertyListDescriptor, PropertyDescriptorParsingType} from '../IPropertyDescriptor';
 import {CSSValue, isIdentToken} from '../syntax/parser';
 
-export const enum BACKGROUND_ORIGIN {
+export enum BACKGROUND_ORIGIN {
     BORDER_BOX = 0,
     PADDING_BOX = 1,
     CONTENT_BOX = 2
