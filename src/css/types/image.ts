@@ -33,6 +33,11 @@ export interface UnprocessedGradientColorStop {
     stop: LengthPercentage | null;
 }
 
+export interface UnprocessedGradientColorHint {
+    color: Color | null;
+    stop: LengthPercentage;
+}
+
 export interface GradientColorStop {
     color: Color;
     stop: number;
@@ -52,7 +57,7 @@ export interface CSSURLImage extends ICSSImage {
 export type GradientCorner = [LengthPercentage, LengthPercentage];
 
 interface ICSSGradientImage extends ICSSImage {
-    stops: UnprocessedGradientColorStop[];
+    stops: (UnprocessedGradientColorStop | UnprocessedGradientColorHint)[];
 }
 
 export interface CSSLinearGradientImage extends ICSSGradientImage {

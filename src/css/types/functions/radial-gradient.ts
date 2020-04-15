@@ -5,7 +5,8 @@ import {
     CSSRadialGradientImage,
     CSSRadialShape,
     CSSRadialSize,
-    UnprocessedGradientColorStop
+    UnprocessedGradientColorStop,
+    UnprocessedGradientColorHint
 } from '../image';
 import {parseColorStop} from './gradient';
 import {FIFTY_PERCENT, HUNDRED_PERCENT, isLengthPercentage, LengthPercentage, ZERO_LENGTH} from '../length-percentage';
@@ -22,7 +23,7 @@ export const CONTAIN = 'contain';
 export const radialGradient = (tokens: CSSValue[]): CSSRadialGradientImage => {
     let shape: CSSRadialShape = CSSRadialShape.CIRCLE;
     let size: CSSRadialSize = CSSRadialExtent.FARTHEST_CORNER;
-    const stops: UnprocessedGradientColorStop[] = [];
+    const stops: (UnprocessedGradientColorStop | UnprocessedGradientColorHint)[] = [];
     const position: LengthPercentage[] = [];
     parseFunctionArgs(tokens).forEach((arg, i) => {
         let isColorStop = true;

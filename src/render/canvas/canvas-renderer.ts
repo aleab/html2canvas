@@ -595,7 +595,7 @@ export class CanvasRenderer {
                 const y = getAbsoluteValue(position[position.length - 1], height);
 
                 const [rx, ry] = calculateRadius(backgroundImage, x, y, width, height);
-                if (rx > 0 && rx > 0) {
+                if (rx > 0 && ry > 0) {
                     const radialGradient = this.ctx.createRadialGradient(left + x, top + y, 0, left + x, top + y, rx);
 
                     processColorStops(backgroundImage.stops, rx * 2).forEach(colorStop =>

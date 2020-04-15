@@ -1,9 +1,10 @@
 import {deepStrictEqual} from 'assert';
 import {Parser} from '../../syntax/parser';
-import {CSSImageType, image} from '../image';
+import {CSSImageType, image, CSSLinearGradientImage} from '../image';
 import {color, pack} from '../color';
 import {FLAG_INTEGER, TokenType} from '../../syntax/tokenizer';
 import {deg} from '../angle';
+import {processColorStops} from '../functions/gradient';
 
 const parse = (value: string) => image.parse(Parser.parseValue(value));
 const colorParse = (value: string) => color.parse(Parser.parseValue(value));
@@ -36,6 +37,25 @@ describe('types', () => {
                             {color: pack(0x3f, 0x87, 0xa6, 1), stop: null}
                         ]
                     }));
+                it('linear-gradient(#f69d3c, 30%, #3f87a6)', () => {
+                    const image = parse('linear-gradient(#f69d3c, 30%, #3f87a6)');
+                    deepStrictEqual(image, {
+                        angle: deg(180),
+                        type: CSSImageType.LINEAR_GRADIENT,
+                        stops: [
+                            {color: pack(0xf6, 0x9d, 0x3c, 1), stop: null},
+                            {color: null, stop: { flags: 4, number: 30, type: 16 }},
+                            {color: pack(0x3f, 0x87, 0xa6, 1), stop: null}
+                        ]
+                    });
+
+                    const colorStops = processColorStops((image as CSSLinearGradientImage).stops, 10);
+                    deepStrictEqual(colorStops, [
+                        {color: pack(0xf6, 0x9d, 0x3c, 1), stop: 0},
+                        {color: pack(Math.round((0xf6 + 0x3f) / 2), Math.round((0x9d + 0x87) / 2), Math.round((0x3c + 0xa6) / 2), 1), stop: 0.3},
+                        {color: pack(0x3f, 0x87, 0xa6, 1), stop: 1},
+                    ]);
+                });
                 it('linear-gradient(yellow, blue)', () =>
                     deepStrictEqual(parse('linear-gradient(yellow, blue)'), {
                         angle: deg(180),

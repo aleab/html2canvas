@@ -5,27 +5,31 @@ import {
     CSSRadialShape,
     GradientColorStop,
     GradientCorner,
-    UnprocessedGradientColorStop
+    UnprocessedGradientColorStop,
+    UnprocessedGradientColorHint
 } from '../image';
-import {color as colorType} from '../color';
+import {color as colorType, pack} from '../color';
 import {getAbsoluteValue, HUNDRED_PERCENT, isLengthPercentage, ZERO_LENGTH} from '../length-percentage';
 
-export const parseColorStop = (args: CSSValue[]): UnprocessedGradientColorStop => {
-    const color = colorType.parse(args[0]);
-    const stop = args[1];
-    return stop && isLengthPercentage(stop) ? {color, stop} : {color, stop: null};
+export const parseColorStop = (args: CSSValue[]): UnprocessedGradientColorStop | UnprocessedGradientColorHint => {
+    if (isLengthPercentage(args[0])) { // Interpolation Hint / Gradient Midpoint
+        return { color: null, stop: args[0] };
+    } else {
+        const color = colorType.parse(args[0]);
+        const stop = args[1];
+        return stop && isLengthPercentage(stop) ? {color, stop} : {color, stop: null};
+    }
 };
 
-export const processColorStops = (stops: UnprocessedGradientColorStop[], lineLength: number): GradientColorStop[] => {
+export const processColorStops = (stops: (UnprocessedGradientColorStop | UnprocessedGradientColorHint)[], lineLength: number): GradientColorStop[] => {
     const first = stops[0];
     const last = stops[stops.length - 1];
-    if (first.stop === null) {
-        first.stop = ZERO_LENGTH;
-    }
 
-    if (last.stop === null) {
-        last.stop = HUNDRED_PERCENT;
-    }
+    if (first.stop === null) first.stop = ZERO_LENGTH;
+    if (first.color === null) first.color = 255;
+
+    if (last.stop === null) last.stop = HUNDRED_PERCENT;
+    if (last.color === null) last.color = 255;
 
     const processStops: (number | null)[] = [];
     let previous = 0;
@@ -63,7 +67,26 @@ export const processColorStops = (stops: UnprocessedGradientColorStop[], lineLen
     }
 
     return stops.map(({color}, i) => {
-        return {color, stop: Math.max(Math.min(1, (processStops[i] as number) / lineLength), 0)};
+        const stop = Math.max(Math.min(1, (processStops[i] as number) / lineLength), 0);
+        let _color: number = 0;
+        if (color === null) {
+            // Interpolation Hint / Gradient Midpoint
+            const prev = stops[i-1];
+            const next = stops[i+1];
+            if (prev.color !== null && next.color !== null) {
+                const prevColor = { a: 0xff & prev.color, b: 0xff & (prev.color >> 8), g: 0xff & (prev.color >> 16), r: 0xff & (prev.color >> 24) };
+                const nextColor = { a: 0xff & next.color, b: 0xff & (next.color >> 8), g: 0xff & (next.color >> 16), r: 0xff & (next.color >> 24) };
+                _color = pack(
+                    Math.round((prevColor.r + nextColor.r) / 2),
+                    Math.round((prevColor.g + nextColor.g) / 2),
+                    Math.round((prevColor.b + nextColor.b) / 2),
+                    Math.round((prevColor.a + nextColor.a) / 2) / 255,
+                );
+            }
+        } else {
+            _color = color;
+        }
+        return {color: _color, stop};
     });
 };
 
