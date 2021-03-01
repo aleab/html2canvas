@@ -6,7 +6,7 @@
     "module": "dist/lib-esm/index.js",
     "browser": "dist/html2canvas.js",
     "typings": "dist/types/index.d.ts",
-    "version": "1.0.0-rc.5",
+    "version": "1.0.0-rc.7",
     "author": {
         "name": "Niklas von Hertzen",
         "email": "niklasvh@gmail.com",
